@@ -5,6 +5,7 @@ import { useProjects } from '../../hooks/useProjects';
 import { parseDateString } from '../../utils/dateHelpers';
 import { LabelPicker } from './LabelPicker';
 import { SubTaskList } from './SubTaskList';
+import { RecurrenceEditor } from './RecurrenceEditor';
 import styles from './TaskDetailPanel.module.css';
 
 interface TaskDetailPanelProps {
@@ -165,6 +166,16 @@ export function TaskDetailPanel({ isOpen, onClose }: TaskDetailPanelProps) {
                 handleChange('labels', newLabels);
               }}
               onLabelCreate={() => {}}
+            />
+          </div>
+
+          <hr style={{ borderColor: 'var(--color-border)', marginTop: 'var(--spacing-lg)' }} />
+
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Recurrence</label>
+            <RecurrenceEditor
+              recurrence={task.recurrence as any}
+              onChange={rule => handleChange('recurrence', rule)}
             />
           </div>
 
