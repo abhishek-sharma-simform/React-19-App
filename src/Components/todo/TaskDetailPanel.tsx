@@ -1,7 +1,10 @@
 import { X } from 'lucide-react';
 import { useTaskStore, selectTaskById } from '../../store/taskStore';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
+import { useProjects } from '../../hooks/useProjects';
 import { parseDateString } from '../../utils/dateHelpers';
+import { LabelPicker } from './LabelPicker';
+import { SubTaskList } from './SubTaskList';
 import styles from './TaskDetailPanel.module.css';
 
 interface TaskDetailPanelProps {
@@ -13,6 +16,7 @@ export function TaskDetailPanel({ isOpen, onClose }: TaskDetailPanelProps) {
   const selectedTaskId = useTaskStore(state => state.selectedTaskId);
   const task = useTaskStore(state => (selectedTaskId ? selectTaskById(state, selectedTaskId) : undefined));
   const updateTask = useTaskStore(state => state.updateTask);
+  const { projects } = useProjects();
 
   useKeyboardShortcut({
     key: 'Escape',
@@ -130,6 +134,43 @@ export function TaskDetailPanel({ isOpen, onClose }: TaskDetailPanelProps) {
               <option value="done">Done</option>
             </select>
           </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="detail-project" className={styles.label}>
+              Project
+            </label>
+            <select
+              id="detail-project"
+              className={styles.select}
+              value={task.projectId || ''}
+              onChange={e => handleChange('projectId', e.target.value || undefined)}
+            >
+              <option value="">No Project</option>
+              {projects.map(project => (
+                <option key={project.id} value={project.id}>
+                  {project.emoji} {project.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Labels</label>
+            <LabelPicker
+              selectedLabelIds={task.labels}
+              onLabelToggle={labelId => {
+                const newLabels = task.labels.includes(labelId)
+                  ? task.labels.filter(l => l !== labelId)
+                  : [...task.labels, labelId];
+                handleChange('labels', newLabels);
+              }}
+              onLabelCreate={() => {}}
+            />
+          </div>
+
+          <hr style={{ borderColor: 'var(--color-border)', marginTop: 'var(--spacing-lg)' }} />
+
+          <SubTaskList task={task} />
         </div>
       </div>
     </>
