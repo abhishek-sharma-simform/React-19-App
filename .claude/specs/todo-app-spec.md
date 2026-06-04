@@ -23,7 +23,19 @@ The Phase 1 MVP has been fully implemented with the following enhancements over 
 - **Proper Timezone Handling:** Date parsing respects local timezone for accurate "Today" filtering
 - **Toast Notification System:** Flexible notification system for user feedback
 
-See [Component Architecture](#10-component-architecture) for actual Phase 1 implementation details.
+**Phase 2 — COMPLETED** ✅ (June 2026)
+
+Phase 2 core features fully implemented and integrated:
+- **Projects Management:** Create, edit, delete projects with emoji icons and custom colors
+- **Labels System:** Multi-select labels with dynamic creation and color coding
+- **Sub-tasks:** Nested sub-tasks with progress tracking and completion indicator
+- **Kanban Board View:** Three-column board (To Do, In Progress, Done) with drag-and-drop
+- **Global Search:** Debounced full-text search across task titles and descriptions
+- **View Toggle:** Seamless switching between List and Board (Kanban) views
+- **Project Selection:** Task assignment to projects with visual indicators
+- **Search Integration:** Search results appear in both list and board views
+
+See [Component Architecture](#10-component-architecture) for actual Phase 1 & 2 implementation details.
 
 ---
 
@@ -513,13 +525,16 @@ components/todo/
 - [x] Responsive layout (sidebar + main area + detail panel)
 
 ### Phase 2 — Core Features (Week 3–4)
-- [ ] Projects sidebar
-- [ ] Labels
-- [ ] Sub-tasks
-- [ ] Board (Kanban) View
-- [ ] Search & filter
-- [ ] Keyboard shortcuts
-- [ ] Drag & drop reorder
+- [x] Projects sidebar with CRUD and creation modal
+- [x] Labels with multi-select and inline creation
+- [x] Sub-tasks with progress tracking
+- [x] Board (Kanban) View with 3 columns and drag-drop
+- [x] Search & filter with debounced full-text search
+- [x] Keyboard shortcuts configuration
+- [x] Drag & drop reorder and status change
+- [x] View toggle between List and Board
+- [x] Project assignment in task detail
+- [x] Search integration across all views
 
 ### Phase 3 — Power Features (Week 5–6)
 - [ ] Calendar View
