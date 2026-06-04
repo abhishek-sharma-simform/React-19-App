@@ -14,6 +14,8 @@ interface UIState {
   isAddingTask: boolean;
   editingTaskId: string | null;
   toasts: Toast[];
+  searchQuery: string;
+  isSearchOpen: boolean;
 }
 
 interface UIActions {
@@ -25,6 +27,8 @@ interface UIActions {
   setEditingTaskId: (id: string | null) => void;
   showToast: (toast: Omit<Toast, 'id'>) => string;
   dismissToast: (id: string) => void;
+  setSearchQuery: (query: string) => void;
+  setSearchOpen: (open: boolean) => void;
 }
 
 type UIStore = UIState & UIActions;
@@ -35,6 +39,8 @@ const initialState: UIState = {
   isAddingTask: false,
   editingTaskId: null,
   toasts: [],
+  searchQuery: '',
+  isSearchOpen: false,
 };
 
 export const useUIStore = create<UIStore>(set => ({
@@ -74,5 +80,11 @@ export const useUIStore = create<UIStore>(set => ({
     set(state => ({
       toasts: state.toasts.filter(t => t.id !== id),
     }));
+  },
+  setSearchQuery: (query: string) => {
+    set({ searchQuery: query });
+  },
+  setSearchOpen: (open: boolean) => {
+    set({ isSearchOpen: open });
   },
 }));

@@ -18,6 +18,8 @@ interface TaskActions {
   reorderTasks: (ids: string[]) => void;
   setActiveSmartList: (list: SmartList) => void;
   setSelectedTaskId: (id: string | null) => void;
+  moveTaskToProject: (taskId: string, projectId: string | undefined) => void;
+  setTaskStatus: (taskId: string, status: import('../types/todo').TaskStatus) => void;
 }
 
 type TaskStore = TaskState & TaskActions;
@@ -85,6 +87,20 @@ export const useTaskStore = create<TaskStore>()(
       },
       setSelectedTaskId: (id: string | null) => {
         set({ selectedTaskId: id });
+      },
+      moveTaskToProject: (taskId: string, projectId: string | undefined) => {
+        set(state => ({
+          tasks: state.tasks.map(task =>
+            task.id === taskId ? { ...task, projectId } : task,
+          ),
+        }));
+      },
+      setTaskStatus: (taskId: string, status) => {
+        set(state => ({
+          tasks: state.tasks.map(task =>
+            task.id === taskId ? { ...task, status } : task,
+          ),
+        }));
       },
     }),
     {
