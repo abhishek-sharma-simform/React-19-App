@@ -7,6 +7,7 @@ import Navbar from "./Components/Navbar";
 import Error from "./Components/Error";
 import UserDetails from "./Components/UserDetails";
 import Developer from "./Components/devloper";
+import TodoApp from "./Components/TodoApp";
 
 const AppLayout = () => {
   return (
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/user/:id",
         element: <UserDetails />,
+      },
+      {
+        path: "/todos",
+        element: <TodoApp />,
       },
     ],
     errorElement: <Error />,
