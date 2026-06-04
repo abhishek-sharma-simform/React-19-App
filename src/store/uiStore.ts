@@ -16,6 +16,7 @@ interface UIState {
   toasts: Toast[];
   searchQuery: string;
   isSearchOpen: boolean;
+  selectedTaskIds: Set<string>;
 }
 
 interface UIActions {
@@ -29,6 +30,9 @@ interface UIActions {
   dismissToast: (id: string) => void;
   setSearchQuery: (query: string) => void;
   setSearchOpen: (open: boolean) => void;
+  toggleTaskSelection: (taskId: string) => void;
+  selectAllTasks: (taskIds: string[]) => void;
+  clearSelection: () => void;
 }
 
 type UIStore = UIState & UIActions;
@@ -41,6 +45,7 @@ const initialState: UIState = {
   toasts: [],
   searchQuery: '',
   isSearchOpen: false,
+  selectedTaskIds: new Set(),
 };
 
 export const useUIStore = create<UIStore>(set => ({
@@ -86,5 +91,22 @@ export const useUIStore = create<UIStore>(set => ({
   },
   setSearchOpen: (open: boolean) => {
     set({ isSearchOpen: open });
+  },
+  toggleTaskSelection: (taskId: string) => {
+    set(state => {
+      const newSelection = new Set(state.selectedTaskIds);
+      if (newSelection.has(taskId)) {
+        newSelection.delete(taskId);
+      } else {
+        newSelection.add(taskId);
+      }
+      return { selectedTaskIds: newSelection };
+    });
+  },
+  selectAllTasks: (taskIds: string[]) => {
+    set({ selectedTaskIds: new Set(taskIds) });
+  },
+  clearSelection: () => {
+    set({ selectedTaskIds: new Set() });
   },
 }));

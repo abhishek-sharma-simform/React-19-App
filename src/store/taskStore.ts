@@ -20,6 +20,9 @@ interface TaskActions {
   setSelectedTaskId: (id: string | null) => void;
   moveTaskToProject: (taskId: string, projectId: string | undefined) => void;
   setTaskStatus: (taskId: string, status: import('../types/todo').TaskStatus) => void;
+  bulkComplete: (ids: string[]) => void;
+  bulkDelete: (ids: string[]) => void;
+  bulkUpdatePriority: (ids: string[], priority: import('../types/todo').Priority) => void;
 }
 
 type TaskStore = TaskState & TaskActions;
@@ -99,6 +102,28 @@ export const useTaskStore = create<TaskStore>()(
         set(state => ({
           tasks: state.tasks.map(task =>
             task.id === taskId ? { ...task, status } : task,
+          ),
+        }));
+      },
+      bulkComplete: (ids: string[]) => {
+        const now = new Date();
+        set(state => ({
+          tasks: state.tasks.map(task =>
+            ids.includes(task.id)
+              ? { ...task, completed: true, completedAt: now, status: 'done' as const }
+              : task,
+          ),
+        }));
+      },
+      bulkDelete: (ids: string[]) => {
+        set(state => ({
+          tasks: state.tasks.filter(task => !ids.includes(task.id)),
+        }));
+      },
+      bulkUpdatePriority: (ids: string[], priority) => {
+        set(state => ({
+          tasks: state.tasks.map(task =>
+            ids.includes(task.id) ? { ...task, priority } : task,
           ),
         }));
       },
