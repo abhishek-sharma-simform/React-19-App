@@ -1,7 +1,16 @@
 import React from "react";
 
-class Developer extends React.Component {
-  constructor(props: any) {
+interface DeveloperProps {
+  name: string;
+  age: number;
+}
+
+interface DeveloperState {
+  count: number;
+}
+
+class Developer extends React.Component<DeveloperProps, DeveloperState> {
+  constructor(props: DeveloperProps) {
     super(props);
     this.state = {
       count: 0,

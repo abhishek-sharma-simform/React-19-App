@@ -1,23 +1,78 @@
-import { Link } from "react-router";
+import { NavLink } from "react-router";
+import { useTaskStore, selectIncompleteTotalCount } from "../store/taskStore";
+import styles from "./Navbar.module.css";
 
 const Navbar = () => {
+  const incompleteCount = useTaskStore(selectIncompleteTotalCount);
+
   return (
-    <div>
-      <ul style={{ display: "flex", gap: "20px", listStyleType: "none" }}>
-        <li>
-          <Link to="/">Home</Link>
+    <nav className={styles.navbar}>
+      <ul className={styles.navList}>
+        <li className={styles.navItem}>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.navLinkActive : ""}`
+            }
+          >
+            Home
+          </NavLink>
         </li>
-        <li>
-          <Link to="/about">About</Link>
+        <li className={styles.navItem}>
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.navLinkActive : ""}`
+            }
+          >
+            About
+          </NavLink>
         </li>
-        <li>
-          <Link to="/contact">Contact</Link>
+        <li className={styles.navItem}>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.navLinkActive : ""}`
+            }
+          >
+            Contact
+          </NavLink>
         </li>
-        <li>
-          <Link to="/developer">Developer </Link>
+        <li className={styles.navItem}>
+          <NavLink
+            to="/developer"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.navLinkActive : ""}`
+            }
+          >
+            Developer
+          </NavLink>
+        </li>
+        <li className={styles.navItem}>
+          <NavLink
+            to="/todos"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.navLinkActive : ""}`
+            }
+          >
+            Tasks
+            {incompleteCount > 0 && (
+              <span className={styles.badge}>{incompleteCount}</span>
+            )}
+          </NavLink>
+        </li>
+        <li className={styles.navItem}>
+          <NavLink
+            to="/blogs"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.navLinkActive : ""}`
+            }
+          >
+            Blogs
+          </NavLink>
         </li>
       </ul>
-    </div>
+    </nav>
   );
 };
 
