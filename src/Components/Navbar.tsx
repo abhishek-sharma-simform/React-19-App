@@ -61,6 +61,16 @@ const Navbar = () => {
             )}
           </NavLink>
         </li>
+        <li className={styles.navItem}>
+          <NavLink
+            to="/blogs"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.navLinkActive : ""}`
+            }
+          >
+            Blogs
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );

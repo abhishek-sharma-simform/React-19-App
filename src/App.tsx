@@ -8,6 +8,7 @@ import Error from "./Components/Error";
 import UserDetails from "./Components/UserDetails";
 import Developer from "./Components/devloper";
 import TodoApp from "./Components/TodoApp";
+import Blogs from "./Components/Blogs";
 
 const AppLayout = () => {
   return (
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/todos",
         element: <TodoApp />,
+      },
+      {
+        path: "/blogs",
+        element: <Blogs />,
       },
     ],
     errorElement: <Error />,
